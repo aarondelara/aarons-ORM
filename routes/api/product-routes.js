@@ -1,41 +1,31 @@
 const router = require("express").Router();
 const { Product, Category, Tag, ProductTag } = require("../../models");
 
-router.get("/", async (req, res) => {
-  try {
-    const products = await Product.findAll({
-      include: [
-        Category,
-        {
-          model: Tag,
-          through: ProductTag,
-        },
-      ],
-    });
-    res.json(products);
-  } catch (error) {
-    console.log(error);
-  }
+router.get("/", (req, res) => {
+  Product.findAll({
+    include: [
+      Category,
+      {
+        model: Tag,
+        through: ProductTag,
+      },
+    ],
+  }).then(products => res.json(products)).catch(err => res.status(500).json(err))
 });
 
-router.get("/:id", async (req, res) => {
-  try {
-    const product = await Product.findOne({
-      where: {
-        id: req.params.id,
+router.get("/:id", (req, res) => {
+  Product.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: [
+      Category,
+      {
+        model: Tag,
+        through: ProductTag,
       },
-      include: [
-        Category,
-        {
-          model: Tag,
-          through: ProductTag,
-        },
-      ],
-    });
-    res.json(product);
-  } catch (error) {
-    console.log(error);
-  }
+    ],
+  }).then(product => res.json(product)).catch(err => res.status(500).json(err))
 });
 
 router.post("/", (req, res) => {
@@ -52,11 +42,7 @@ router.post("/", (req, res) => {
       }
       res.status(200).json(product);
     })
-    .then((productTagIds) => res.status(200).json(productTagIds))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
+    .then((productTagIds) => res.status(200).json(productTagIds)).catch((err) => res.status(400).json(err));
 });
 
 router.put("/:id", (req, res) => {
@@ -97,17 +83,12 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", async (req, res) => {
-  try {
-    const product = await Product.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    res.json(product);
-  } catch (error) {
-    console.log(error);
-  }
+router.delete("/:id", (req, res) => {
+  Product.destroy({
+    where: {
+      id: req.params.id,
+    },
+  }).then(product => res.json(product)).catch(err => res.status(500).json(err))
 });
 
 module.exports = router;
