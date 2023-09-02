@@ -1,0 +1,24 @@
+{
+  "name": "aarons-orm",
+  "version": "1.0.0",
+  "description": "This is my backend for an e-commerce website. I built this for an e-commerce website and made sure that it was solid so that it would be able to be efficient for years. This backend was made with the intention to keep my e-commerce safe and to outshine other companies' backend. ## Credits Thank you Aden Eldred for helping me!!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "seed": "node seeds/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^8.6.0",
+    "express": "^4.18.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^5.22.5"
+  }
+}
